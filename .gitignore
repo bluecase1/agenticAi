@@ -1,0 +1,36 @@
+# 1. 가상환경 (가장 중요)
+venv/
+.venv/
+env/
+bin/
+obj/
+
+# 2. 파이썬 캐시 및 컴파일 파일
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 3. 환경 변수 및 보안 파일 (절대 공유 금지)
+.env
+.env.local
+.env.shared
+secrets.json
+
+# 4. OS 관련 파일
+.DS_Store
+Thumbs.db
+
+# 5. VS Code 설정
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# 6. Jupyter Notebook 체크포인트
+.ipynb_checkpoints/
+
+# 7. 데이터 및 로그 (대용량 파일 제외)
+*.log
+data/
+outputs/
