@@ -1,0 +1,8 @@
+#requirementes.txt
+numpy>=2.0.0
+langgraph
+langchain_openai
+mcp
+pykrx
+yfinance
+python-dotenv
