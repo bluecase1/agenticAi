@@ -1,9 +1,15 @@
-from langchain_openai import D
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from state import AgentState
 
+from langchain_google_genai import ChatGoogleGenerativeAI
+import os
+
 # 1. LLM 설정 (도구 사용 능력이 뛰어난 모델 추천)
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+# llm = ChatOpenAI(model="gpt-4o", temperature=0)
+
+# OpenAI 대신 Gemini 사용
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=os.getenv("GOOGLE_API_KEY"))
 
 def researcher_node(state: AgentState) -> dict:
     """판별된 시장에 따라 적절한 MCP 도구를 선택하여 데이터를 수집합니다."""

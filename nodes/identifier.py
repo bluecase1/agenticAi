@@ -2,8 +2,16 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from state import AgentState
 
+from langchain_google_genai import ChatGoogleGenerativeAI
+import os
+
+
 # LLM 설정 (OpenAI 외에 다른 모델로 교체 가능)
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+# llm = ChatOpenAI(model="gpt-4o", temperature=0)
+
+# OpenAI 대신 Gemini 사용
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=os.getenv("GOOGLE_API_KEY"))
+
 
 def identifier_node(state: AgentState) -> dict:
     """사용자의 질문을 분석하여 어떤 시장(KR/US/BOTH)에 대한 것인지 판별합니다."""

@@ -6,3 +6,4 @@ mcp
 pykrx
 yfinance
 python-dotenv
+langchain-google-genai

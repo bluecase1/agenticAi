@@ -1,3 +1,13 @@
+import os
+import sys
+from dotenv import load_dotenv
+
+# 1. 다른 무엇보다 "가장 먼저" 환경 변수를 로드합니다.
+load_dotenv() 
+
+# 2. 그 다음 경로 설정
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from langgraph.graph import StateGraph, START, END
 from state import AgentState
 
