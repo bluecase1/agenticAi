@@ -6,13 +6,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test_kr_stock_module_imports():
     """Test kr_stock module import"""
-    # Note: kr_stock.py has encoding issues with Korean characters on Windows
-    # This test is skipped on Windows for now
-    import platform
-    if platform.system() == "Windows":
-        print("[SKIP] kr_stock module skipped on Windows (encoding issue)")
-        return
-    
     try:
         from mcp_servers.kr_stock import get_kr_stock_price
         assert callable(get_kr_stock_price)
