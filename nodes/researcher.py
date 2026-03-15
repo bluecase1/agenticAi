@@ -9,7 +9,10 @@ import os
 # llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
 # OpenAI 대신 Gemini 사용
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=os.getenv("GOOGLE_API_KEY"))
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash", 
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
 
 def researcher_node(state: AgentState) -> dict:
     """판별된 시장에 따라 적절한 MCP 도구를 선택하여 데이터를 수집합니다."""

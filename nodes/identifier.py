@@ -10,7 +10,10 @@ import os
 # llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
 # OpenAI 대신 Gemini 사용
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=os.getenv("GOOGLE_API_KEY"))
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash", 
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
 
 
 def identifier_node(state: AgentState) -> dict:

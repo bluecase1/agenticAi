@@ -9,7 +9,10 @@ import os
 # llm = ChatOpenAI(model="gpt-4o", temperature=0.7) # 리포트 작성이므로 온도를 약간 높여 자연스럽게 만듭니다.
 
 # OpenAI 대신 Gemini 사용
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=os.getenv("GOOGLE_API_KEY"))
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash", 
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
 
 def analyst_node(state: AgentState) -> dict:
     """수집된 시장 데이터를 종합하여 최종 투자 분석 리포트를 작성합니다."""
