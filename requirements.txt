@@ -7,3 +7,5 @@ pykrx
 yfinance
 python-dotenv
 langchain-google-genai
+setuptools
+python-telegram-bot
