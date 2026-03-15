@@ -12,6 +12,7 @@ LangGraph 기반 주식 분석 에이전트를 실행합니다.
 """
 import os
 import sys
+import re
 import asyncio
 from typing import Dict, Any
 
@@ -36,6 +37,36 @@ load_dotenv()
 
 # 전역 딕셔너리로 사용자 세션 관리
 user_sessions: Dict[str, Dict[str, Any]] = {}
+
+
+def escape_markdown(text: str) -> str:
+    """
+    Telegram Markdown special characters을 이스케이프합니다.
+    
+    Markdown에서 사용되는 특수문자를 이스케이프하여
+    "Can't parse entities" 오류를 방지합니다.
+    """
+    # Telegram Markdown v1 special characters
+    special_chars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!']
+    
+    for char in special_chars:
+        text = text.replace(char, f'\\{char}')
+    
+    return text
+
+
+async def send_message_safe(update: Update, text: str, parse_mode: str = "MarkdownV2"):
+    """
+    Markdown 파싱 오류가 발생하면 일반 텍스트로 전송합니다.
+    """
+    try:
+        await update.message.reply_text(text, parse_mode=parse_mode)
+    except Exception as e:
+        # Markdown 파싱 오류 발생 시 일반 텍스트로 재시도
+        if "Can't parse entities" in str(e):
+            await update.message.reply_text(text, parse_mode=None)
+        else:
+            raise
 
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -79,8 +110,9 @@ async def analyze_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # 에이전트 실행
     result = await run_agent(user_message, update.effective_user.id)
     
-    # 결과 전송
-    await update.message.reply_text(result, parse_mode="Markdown")
+    # 결과 전송 (Markdown 이스케이프 후)
+    safe_result = escape_markdown(result)
+    await send_message_safe(update, safe_result)
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -99,8 +131,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # LangGraph 에이전트 실행
         result = await run_agent(user_message, user_id)
         
-        # 결과 전송
-        await update.message.reply_text(result, parse_mode="Markdown")
+        # 결과 전송 (Markdown 이스케이프 후)
+        safe_result = escape_markdown(result)
+        await send_message_safe(update, safe_result)
         
     except Exception as e:
         await update.message.reply_text(
